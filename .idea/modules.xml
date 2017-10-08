@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/analysis-service/analysis-service.iml" filepath="$PROJECT_DIR$/analysis-service/analysis-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend-api-service/backend-api-service.iml" filepath="$PROJECT_DIR$/backend-api-service/backend-api-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/front-end/front-end.iml" filepath="$PROJECT_DIR$/front-end/front-end.iml" />
+      <module fileurl="file://$PROJECT_DIR$/index-service/index-service.iml" filepath="$PROJECT_DIR$/index-service/index-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/market-watcher.iml" filepath="$PROJECT_DIR$/market-watcher.iml" />
+    </modules>
+  </component>
+</project>
