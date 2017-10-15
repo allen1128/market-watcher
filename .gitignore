@@ -19,3 +19,5 @@ build/
 /build/
 /out/
 target/
+libraries/
+META-INF/
