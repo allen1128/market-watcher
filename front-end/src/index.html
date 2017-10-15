@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="marketWatcherApp">
 <head>
     <meta charset="UTF-8">
-    <title>First Page</title>
+    <title>Home page</title>
+    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
 </head>
 <body>
+	<h1>Home Page>
+	<div>
+		<p>Enter your name <input type="text" ng-model="name"></p>
+		<p>Hello {{name}}</p>
+	</div>
+
 First Page
 </body>
 </html>
