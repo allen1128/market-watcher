@@ -1,13 +1,17 @@
-myApp.controller('searchController', ['$scope', '$filter', '$http', '$location', 'searchService', function($scope, $filter, $http, $location, searchService) {
+myApp.controller('searchController', ['$scope', '$filter', '$resource', '$http','$location', 'searchService', function($scope, $filter, $resource, $http, $location, searchService) {
 	$scope.name ="search result page";
-    console.log(searchService.keyword);
-    $http.get('assets/results.json')
-        .success(function(result){
-            $scope.realEstates = result;
-        })
-        .error(function(data, status){
-            console.log(data);
-        });
+
+//    $http.get('assets/results.json')
+//    .success(function(result){
+//        $scope.realEstates = result;
+//    })
+//    .error(function(data, status){
+//        console.log(data);
+//    });
+
+    $scope.searchApi = $resource("http://localhost:9998/realestates/", {callback: "JSON_CALLBACK"}, {get:{method:"JSONP"}});
+    $scope.realEstates = $scope.searchApi.get();
+    
 	$scope.formattedRealEstate = function(realEstate){
 		return 'price: ' + realEstate.price + ', number of bedrooms:' + realEstate.bedroomNr  + ', neighbood:' + realEstate.hood + ', posted date: ' + realEstate.postedDate;
 	}
