@@ -1,1 +1,2 @@
-var myApp = angular.module('myApp', ['ngRoute', 'ngResource']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngResource', 'simplePagination']);
+simplePagination

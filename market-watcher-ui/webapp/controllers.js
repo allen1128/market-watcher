@@ -1,5 +1,7 @@
-myApp.controller('searchController', ['$scope', '$filter', '$resource', '$http','$location', 'searchService', function($scope, $filter, $resource, $http, $location, searchService) {
+myApp.controller('searchController', ['$scope', '$filter', '$resource', '$http','$location', 'searchService', 'Pagination', function($scope, $filter, $resource, $http, $location, searchService, Pagination) {
+    var PAGE_SIZE = 10;
 	$scope.name ="search result page";
+    $scope.pagination = Pagination.getNew(PAGE_SIZE);
 
 //    $http.get('assets/results.json')
 //    .success(function(result){
@@ -8,9 +10,20 @@ myApp.controller('searchController', ['$scope', '$filter', '$resource', '$http',
 //    .error(function(data, status){
 //        console.log(data);
 //    });
+//
+//    $scope.searchApi = $resource("http://localhost:9998/realestates/", {callback: "JSON_CALLBACK"}, {get:{method:"JSONP"}});
+//    $scope.realEstates = $scope.searchApi.get();
+//    
+    var url = "http://127.0.0.1:9998/realestates/";
 
-    $scope.searchApi = $resource("http://localhost:9998/realestates/", {callback: "JSON_CALLBACK"}, {get:{method:"JSONP"}});
-    $scope.realEstates = $scope.searchApi.get();
+    $http.get(url)
+        .success(function(data, status, headers, config) {
+            $scope.realEstates = data;
+            $scope.pagination.numPages = Math.ceil($scope.realEstates.length/$scope.pagination.perPage);
+        })
+        .error(function(data, status, headers, config) {
+            console.log(data);
+        });
     
 	$scope.formattedRealEstate = function(realEstate){
 		return 'price: ' + realEstate.price + ', number of bedrooms:' + realEstate.bedroomNr  + ', neighbood:' + realEstate.hood + ', posted date: ' + realEstate.postedDate;
