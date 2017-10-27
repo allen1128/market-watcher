@@ -1,53 +1,33 @@
-<<<<<<< HEAD
-myApp.controller('searchController', ['$scope', '$filter', '$resource', '$http','$location', 'searchService', function($scope, $filter, $resource, $http, $location, searchService) {
-	$scope.name ="search result page";
-    console.log(searchService.keyword);
-    $http.jsonp('http://localhost:9998/realestates/?callback=JSON_CALLBACK')
-        .success(function(result){
-         $scope.realEstates = result;
-        })
-        .error(function(data, status){
-         console.log(data);
-        });
-
-    $scope.searchApi = $resource("http://localhost:9998/realestates/", {callback: "JSON_CALLBACK"}, {get:{method:"JSONP"}});
-    $scope.realEstates = $scope.searchApi.get();
-    
-	$scope.formattedRealEstate = function(realEstate){
-		return 'price: ' + realEstate.price + ', number of bedrooms:' + realEstate.bedroomNr  + ', neighbood:' + realEstate.hood + ', posted date: ' + realEstate.postedDate;
-	}
-=======
 myApp.controller('searchController', ['$scope', '$filter', '$resource', '$http', '$location', 'searchService', 'Pagination', function($scope, $filter, $resource, $http, $location, searchService, Pagination) {
     var PAGE_SIZE = 10;
     $scope.pagination = Pagination.getNew(PAGE_SIZE);
 
-    $http.get('assets/results.json')
-        .success(function(result) {
-            $scope.realEstates = result;
-            $scope.pagination.numPages = Math.ceil($scope.realEstates.length / $scope.pagination.perPage);
-        })
-        .error(function(data, status) {
-            console.log(data);
-        });
-    //
-    //    $scope.searchApi = $resource("http://localhost:9998/realestates/", {callback: "JSON_CALLBACK"}, {get:{method:"JSONP"}});
-    //    $scope.realEstates = $scope.searchApi.get();
-    //    
-    //var url = "http://127.0.0.1:9998/realestates/";
-
-    // $http.get(url)
-    //     .success(function(data, status, headers, config) {
-    //         $scope.realEstates = data;
+    // $http.get('assets/results.json')
+    //     .success(function(result) {
+    //         $scope.realEstates = result;
     //         $scope.pagination.numPages = Math.ceil($scope.realEstates.length / $scope.pagination.perPage);
     //     })
-    //     .error(function(data, status, headers, config) {
+    //     .error(function(data, status) {
     //         console.log(data);
     //     });
+    //
+    //    $scope.searchApi = $resource("http://127.0.0.1:9998/realestates/", {callback: "JSON_CALLBACK"}, {get:{method:"JSONP"}});
+    //    $scope.realEstates = $scope.searchApi.get();
+    //    
+    var url = "http://127.0.0.1:9998/realestates/";
+
+    $http.get(url)
+        .success(function(data, status, headers, config) {
+            $scope.realEstates = data;
+            $scope.pagination.numPages = Math.ceil($scope.realEstates.length / $scope.pagination.perPage);
+        })
+        .error(function(data, status, headers, config) {
+            console.log(data);
+        });
 
     $scope.formattedRealEstate = function(realEstate) {
         return 'price: ' + realEstate.price + ', number of bedrooms:' + realEstate.bedroomNr + ', neighbood:' + realEstate.hood + ', posted date: ' + realEstate.postedDate;
     }
->>>>>>> e80ad817de75045a651b35a53824e243a684a962
 }]);
 
 myApp.controller('forecastController', ['$scope', '$routeParams', function($scope, $routeParams) {

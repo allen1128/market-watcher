@@ -19,7 +19,7 @@ public class RealEstateController {
     RealEstateService realEstateService;
 
     @RequestMapping(value="/", method = RequestMethod.GET)
-    @CrossOrigin(origins = "http://127.0.0.1:50470")
+    @CrossOrigin(origins = "http://127.0.0.1:54209")
     List<RealEstate> findAll(){
         return realEstateService.findAll();
     }
