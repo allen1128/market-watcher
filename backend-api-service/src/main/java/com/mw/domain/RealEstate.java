@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -20,6 +17,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RealEstate {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long reId;
     private String title;
     private String hood;
@@ -28,7 +26,10 @@ public class RealEstate {
     private Integer size;
     private Integer category;
 
+    @Column(name="posted_date")
     private Date datePosted;
+
+    @Column(name="created_date")
     private Date dateCreated = new Date();
 
     @Column(name="DETAIL_URL")

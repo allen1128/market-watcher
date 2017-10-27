@@ -35,8 +35,8 @@ myApp.controller('forecastController', ['$scope', '$routeParams', function($scop
     $scope.num = $routeParams.num;
 }]);
 
-myApp.controller('notificationController', ['$scope', 'Pagination', function($scope, Pagination) {
-    var PAGE_SIZE = 1;
+myApp.controller('notificationController', ['$scope', 'Pagination', '$http', function($scope, Pagination, $http) {
+    var PAGE_SIZE = 10;
     $scope.pagination = Pagination.getNew(PAGE_SIZE);
 
     $scope.selectedCity = "",
@@ -85,8 +85,35 @@ myApp.controller('notificationController', ['$scope', 'Pagination', function($sc
         }
     ];
 
-    $scope.subscriptions = [{ "email": "abc@gmail.com" }, { "email": "bill.gates@microsoft.com" }]
-    $scope.pagination.numPages = Math.ceil($scope.subscriptions.length / $scope.pagination.perPage);
+    //$scope.subscriptions = [{ "email": "abc@gmail.com" }, { "email": "bill.gates@microsoft.com" }]
+
+    
+
+    $scope.addSubscription = function(){
+        var url = "http://127.0.0.1:9998/realestates/notification/add/";
+        $http.post(url, {"email": $scope.email})
+        .success(function(data){
+            $scope.successMsg = "Added Successfully";
+            $scope.getSubscriptions();
+        })
+        .error(function(data){
+            console.log(data);
+        });
+    };
+
+    $scope.getSubscriptions = function(){
+        var url = "http://127.0.0.1:9998/realestates/notifications/";
+        $http.get(url)
+        .success(function(data, status, headers, config) {
+            $scope.subscriptions = data;
+            $scope.pagination.numPages = Math.ceil($scope.subscriptions.length / $scope.pagination.perPage);
+        })
+        .error(function(data, status, headers, config) {
+            console.log(data);
+        });
+    };
+
+    $scope.getSubscriptions();
 
 }]);
 
