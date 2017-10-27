@@ -1,4 +1,4 @@
-myApp.config(function($routeProvider){
+myApp.config(function($routeProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'views/search.html',

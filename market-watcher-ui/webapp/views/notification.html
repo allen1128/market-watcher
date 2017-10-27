@@ -1,1 +1,50 @@
-<h3>{{ name }}</h3>
+<h1>Notifications</h1>
+<div>
+    <form name="subscribeForm">
+        <label>City:</label>
+        <select name="repeatSelect" id="repeatSelect" ng-model="selectedCity">
+            <option ng-repeat="city in cities" value="{{city.id}}">{{city.name}}</option>
+        </select>
+        &nbsp;&nbsp;&nbsp;
+        <label>Price:</label>
+        <select name="repeatMinPrice" id="repeatMinPrice" ng-model="minPrice">
+            <option ng-repeat="price in priceRange" value="{{price.id}}">{{price.name}}</option>
+        </select>
+        &nbsp; to &nbsp;
+        <select name="repeatMaxPrice" id="repeatMaxPrice" ng-model="maxPrice">
+            <option ng-repeat="price in priceRange" value="{{price.id}}">{{price.name}}</option>
+        </select>
+
+        &nbsp;&nbsp;&nbsp;
+        <label>Room Numbers:</label>
+        <select name="repeatMinRoomNr" id="repeatMinRoomNr" ng-model="minRoomNr">
+            <option ng-repeat="roomNr in roomNrRange" value="{{roomNr.id}}">{{roomNr.name}}</option>
+        </select>
+        &nbsp; to &nbsp;
+        <select name="repeatMaxRoomNr" id="repeatMaxRoomNr" ng-model="maxRoomNr">
+            <option ng-repeat="roomNr in roomNrRange" value="{{roomNr.id}}">{{roomNr.name}}</option>
+        </select>
+
+        <label>Add Subscription:
+            <input type="email" ng-model="email" name="input" length="20" />
+        </label>
+    </form>
+</div>
+
+
+
+
+<div>
+    <button ng-click="pagination.prevPage()">Previous</button>
+    <button ng-click="pagination.nextPage()">Next</button>
+</div>
+<br />
+<div class="list-group">
+    <subscription-list subscription-object="subscription" ng-repeat="subscription in subscriptions | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
+    </subscription-list>
+</div>
+<div>
+    <button ng-click="pagination.prevPage()">Previous</button>
+    <button ng-click="pagination.nextPage()">Next</button>
+</div>
+<br />

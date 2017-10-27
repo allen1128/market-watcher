@@ -1,7 +1,18 @@
-<h3>Search Results</h3>
+<h1>Recent Posts</h1>
+
+<div>
+    <button ng-click="pagination.prevPage()">Previous</button>
+    <button ng-click="pagination.nextPage()">Next</button>
+</div>
+<br />
 <div class="list-group">
     <search-result real-estate-object="realEstate" 
     	formatted-real-estate-function="formattedRealEstate(realEstate)" 
-    	ng-repeat="realEstate in realEstates">
+    	ng-repeat="realEstate in realEstates | startFrom: pagination.page * pagination.perPage | limitTo: pagination.perPage">
     </search-result>
 </div>
+<div>
+    <button ng-click="pagination.prevPage()">Previous</button>
+    <button ng-click="pagination.nextPage()">Next</button>
+</div>
+<br />
