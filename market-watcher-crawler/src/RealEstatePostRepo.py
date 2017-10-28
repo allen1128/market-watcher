@@ -7,6 +7,7 @@ Created on Oct 14, 2017
 import pymysql
 import time
 import pika
+import json
 
 class RealEstatePostRepo:
     
@@ -19,7 +20,8 @@ class RealEstatePostRepo:
                              cursorclass=pymysql.cursors.DictCursor)
     
         self.mq_credentials = pika.PlainCredentials('guest', 'guest')
-        self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1',15672,'/', self.mq_credentials))
+        self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters('localhost',5672,'/', self.mq_credentials))
+        #self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=15672))
         self.mq_channel = self.mq_conn.channel()
         self.mq_queue_name = "q_real_estate_posts"
         self.mq_channel.queue_declare(queue=self.mq_queue_name)        
@@ -38,7 +40,7 @@ class RealEstatePostRepo:
                 
     def send_to_mq(self, posts):
         for post in posts:
-            self.mq_channel.basic_publish(exchange='', routing_key=self.mq_queue_name, body=post)
+            self.mq_channel.basic_publish(exchange='', routing_key=self.mq_queue_name, body=json.dumps(post))
                     
             
     def __del__(self):

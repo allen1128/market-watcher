@@ -15,6 +15,7 @@ class Crawler:
         self.urlManager = UrlManager()
         self.htmlDownloader = HtmlDownloader()
         self.htmlParser = HtmlParser()
+        self.repo = RealEstatePostRepo()
         urls = []
         urls.append("https://vancouver.craigslist.ca/search/rea?s=")
         #urls.append("base": "https://montreal.craigslist.ca/search/rea?s=")
