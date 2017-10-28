@@ -25,11 +25,7 @@ public class RealEstate {
     private Integer bedroomNr;
     private Integer size;
     private Integer category;
-
-    @Column(name="posted_date")
     private Date datePosted;
-
-    @Column(name="created_date")
     private Date dateCreated = new Date();
 
     @Column(name="DETAIL_URL")

@@ -13,7 +13,7 @@ myApp.controller('searchController', ['$scope', '$filter', '$resource', '$http',
     //
     //    $scope.searchApi = $resource("http://127.0.0.1:9998/realestates/", {callback: "JSON_CALLBACK"}, {get:{method:"JSONP"}});
     //    $scope.realEstates = $scope.searchApi.get();
-    //    
+    
     var url = "http://127.0.0.1:9998/realestates/";
 
     $http.get(url)
@@ -53,45 +53,52 @@ myApp.controller('notificationController', ['$scope', 'Pagination', '$http', fun
         ];
     $scope.priceRange = [
         {
-            id: 1, name: "100K"
+            id: 1, name: "100000"
         }, {
-            id: 2, name: "300K"
+            id: 2, name: "300000"
         }, {
-            id: 3, name: "500K"
+            id: 3, name: "500000"
         }, {
-            id: 4, name: "700K"
+            id: 4, name: "700000"
         }, {
-            id: 5, name: "900K"
+            id: 5, name: "900000"
         }, {
-            id: 6, name: "1M"
+            id: 6, name: "1000000"
         }, {
-            id: 7, name: "1.5M"
-
-        }, {
-            id: 7, name: "Any"
+            id: 7, name: "1500000"
         }
     ];
     $scope.roomNrRange = [
         {
-            id: 1, name: "1br"
+            id: 1, name: "1"
         }, {
-            id: 2, name: "2br"
+            id: 2, name: "2"
         }, {
-            id: 3, name: "3br"
+            id: 3, name: "3"
         }, {
-            id: 4, name: "4br"
+            id: 4, name: "4"
         }, {
-            id: 5, name: "Any"
+            id: 5, name: "5"
         }
     ];
 
     //$scope.subscriptions = [{ "email": "abc@gmail.com" }, { "email": "bill.gates@microsoft.com" }]
 
     
+    $scope.generateSubscriptionData = function(){
+        return {
+            "email": $scope.email,
+            "city": $scope.city,
+            "minPrice": $scope.minPrice,
+            "maxPrice": $scope.maxPrice,
+            "minRoomNr": $scope.minRoomNr,
+            "maxRoomNr": $scope.maxRoomNr
+        };
+    };
 
     $scope.addSubscription = function(){
         var url = "http://127.0.0.1:9998/realestates/notification/add/";
-        $http.post(url, {"email": $scope.email})
+        $http.post(url, $scope.generateSubscriptionData())
         .success(function(data){
             $scope.successMsg = "Added Successfully";
             $scope.getSubscriptions();

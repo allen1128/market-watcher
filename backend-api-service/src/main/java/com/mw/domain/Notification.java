@@ -17,17 +17,15 @@ import java.util.Date;
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long nfId;
-    String email;
-    
-    String city;
-    Integer minPrice;
-    Integer maxPrice;
-    Integer minRoomNr;
-    Integer maxRoomNr;
+    private Long nfId;
+    private String email;
 
-    @Column(name="created_date")
-    Date dateCreated = new Date();
+    private String city;
+    private Integer minPrice;
+    private Integer maxPrice;
+    private Integer minRoomNr;
+    private Integer maxRoomNr;
+    private Date dateCreated = new Date();
 
     @Override
     public String toString() {

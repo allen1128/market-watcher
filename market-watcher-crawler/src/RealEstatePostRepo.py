@@ -6,16 +6,26 @@ Created on Oct 14, 2017
 
 import pymysql
 import time
+import pika
 
 class RealEstatePostRepo:
-    conn = pymysql.connect(host='127.0.0.1',
+    
+    def __init__(self):
+        self.db_conn = pymysql.connect(host='127.0.0.1',
                              user='root',
                              password='',
                              db='market_watch',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-    def save(self, posts):
-            with self.conn.cursor() as cursor:
+    
+        self.mq_credentials = pika.PlainCredentials('guest', 'guest')
+        self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1',5672,'/', self.mq_credentials))
+        self.mq_channel = self.mq_conn.channel()
+        self.mq_queue_name = "q_real_estate_posts"
+        self.mq_channel.queue_declare(queue=self.mq_queue_name)        
+        
+    def save_to_db(self, posts):
+            with self.db_conn.cursor() as cursor:
                 for post in posts:
                     try:
                         sql = "INSERT INTO real_estate (title, hood, price, size, bedroom_nr, date_posted, detail_url, city) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -24,10 +34,16 @@ class RealEstatePostRepo:
                     except Exception as ex:
                         print(ex)
                                         
-                self.conn.commit()        
+                self.db_conn.commit()
+                
+    def send_to_mq(self, posts):
+        for post in posts:
+            self.mq_channel.basic_publish(exchange='', routing_key=self.mq_queue_name, body=post)
+                    
             
     def __del__(self):
-        self.conn.close()
+        self.db_conn.close()
+        self.mq_conn.close()
         
         
         

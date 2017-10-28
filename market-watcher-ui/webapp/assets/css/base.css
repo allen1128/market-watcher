@@ -5,3 +5,7 @@ html, body, input, select, textarea
 h1{
     padding-bottom: 20px;
 }
+
+.error{
+    color: red;
+}

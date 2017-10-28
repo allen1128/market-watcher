@@ -10,7 +10,7 @@ class UrlManager(object):
             self.old_urls = set()
             
     def has_new_url(self):
-        return self.new_urls.size() > 0;
+        return len(self.new_urls) > 0
     
     def get_new_url(self): 
         new_url = self.new_urls.pop()
@@ -27,10 +27,10 @@ class UrlManager(object):
                
     
     def get_new_url_size(self):
-        return self.new_urls.size() 
+        return len(self.new_urls) 
     
     def get_old_url_size(self):
-        return self.old_urls.size()
+        return len(self.old_urls)
     
     def generate_new_urls(self, base_url, query_range, step_size):
         for position in range(query_range):

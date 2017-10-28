@@ -63,6 +63,7 @@ class HtmlParser(object):
                 post.bedroom_nr = self.get_bedroom_nr(postTypes)
                 post.size = self.get_size(postTypes)
                 post.hood = self.get_hood(result.p.find('span', attrs={'class':'result-hood'}).contents[0].strip())
+                post.external_id = result.p.find('span', attrs={'class':'result-tags'})['data-pid']
                 post.date_posted = result.p.time['datetime']
                 posts.append(post)
             except Exception as e:
