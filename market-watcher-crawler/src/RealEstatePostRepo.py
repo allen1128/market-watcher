@@ -23,7 +23,7 @@ class RealEstatePostRepo:
         self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters('localhost',5672,'/', self.mq_credentials))
         #self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=15672))
         self.mq_channel = self.mq_conn.channel()
-        self.mq_queue_name = "q_real_estate_posts"
+        self.mq_queue_name = "binder.real-estate-posts"
         self.mq_channel.queue_declare(queue=self.mq_queue_name)        
         
     def save_to_db(self, posts):

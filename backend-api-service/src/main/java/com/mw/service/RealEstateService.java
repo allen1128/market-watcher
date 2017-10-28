@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RealEstateService {
     List<RealEstate> findAll();
+    void save(RealEstate realEstate);
 }

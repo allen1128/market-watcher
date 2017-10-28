@@ -17,4 +17,9 @@ public class RealEstateServiceImpl implements RealEstateService {
     public List<RealEstate> findAll() {
         return realEstateRepository.findAll();
     }
+
+    @Override
+    public void save(RealEstate realEstate) {
+        realEstateRepository.save(realEstate);
+    }
 }
