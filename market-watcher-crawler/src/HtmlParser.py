@@ -42,29 +42,32 @@ class HtmlParser(object):
         return price
     
     def parse_for_size(self, content):
-        soup = BeautifulSoup(content, 'html.parser')
-        size = soup.find('span', attrs={'class':'totalCount'}).contents[0].strip()
-        return size
+        soup = BeautifulSoup(content, 'html.parser')        
+        size = soup.find('span', attrs={'class':'totalcount'}).contents[0].strip()
+        return int(size)
     
     def parser(self, content):
         soup = BeautifulSoup(content, 'html.parser')
         results = soup.find(id='sortable-results').find('ul').find_all('li')
-        post = {}
+        
         posts = []
         
         for result in results:
             try:
                 print(' '.join(format(ord(x), 'b') for x in result.text))
-                post.title = result.p.a.contents[0]
-                post.detail_url = result.p.a['href']
-                post.price = self.get_price(result.p.find('span', attrs={'class':'result-price'}).contents[0].strip())
+                post = {}
+                post["title"] = result.p.a.contents[0]
+                post["detail_url"] = result.p.a['href']
+                post["city"] = post["detail_url"][post["detail_url"].index('//')+2:post["detail_url"].index('.')].capitalize()
+                post["price"] = self.get_price(result.p.find('span', attrs={'class':'result-price'}).contents[0].strip())
                 postType = result.p.find('span', attrs={'class':'housing'}).contents[0].strip()
                 postTypes = postType.split("-")
-                post.bedroom_nr = self.get_bedroom_nr(postTypes)
-                post.size = self.get_size(postTypes)
-                post.hood = self.get_hood(result.p.find('span', attrs={'class':'result-hood'}).contents[0].strip())
-                post.external_id = result.p.find('span', attrs={'class':'result-tags'})['data-pid']
-                post.date_posted = result.p.time['datetime']
+                post["bedroom_nr"] = self.get_bedroom_nr(postTypes)
+                post["size"] = self.get_size(postTypes)
+                post["hood"] = self.get_hood(result.p.find('span', attrs={'class':'result-hood'}).contents[0].strip())
+                external_id = result.p.find('span', attrs={'class':'maptag'})
+                post["external_id"] = result.p.find('span', attrs={'class':'maptag'})['data-pid']
+                post["date_posted"] = result.p.time['datetime']
                 posts.append(post)
             except Exception as e:
                 print(e)

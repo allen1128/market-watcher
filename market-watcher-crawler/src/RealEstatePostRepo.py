@@ -19,7 +19,7 @@ class RealEstatePostRepo:
                              cursorclass=pymysql.cursors.DictCursor)
     
         self.mq_credentials = pika.PlainCredentials('guest', 'guest')
-        self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1',5672,'/', self.mq_credentials))
+        self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1',15672,'/', self.mq_credentials))
         self.mq_channel = self.mq_conn.channel()
         self.mq_queue_name = "q_real_estate_posts"
         self.mq_channel.queue_declare(queue=self.mq_queue_name)        

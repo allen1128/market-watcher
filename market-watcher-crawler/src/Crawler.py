@@ -16,9 +16,9 @@ class Crawler:
         self.htmlDownloader = HtmlDownloader()
         self.htmlParser = HtmlParser()
         urls = []
-        urls.append({"city": "Vancouver", "url": "https://vancouver.craigslist.ca/search/rea?s="})
-        urls.append({"city": "Montreal", "url": "https://montreal.craigslist.ca/search/rea?s="})
-        urls.append({"city": "Toronto", "url": "https://toronto.craigslist.ca/search/rea?s="})
+        urls.append("https://vancouver.craigslist.ca/search/rea?s=")
+        #urls.append("base": "https://montreal.craigslist.ca/search/rea?s=")
+        #urls.append("https://toronto.craigslist.ca/search/rea?s=")
                 
         for url in urls:
             html = self.htmlDownloader.download(url)
@@ -27,30 +27,17 @@ class Crawler:
             
         
     def execute(self):
-        posts = []
-        repRep = RealEstatePostRepo()     
-        count = 0
-        
+        repRep = RealEstatePostRepo()
         
         while (self.urlManager.has_new_url()):
             try:
                 url =  self.urlManager.get_new_url()
-                html = self.htmlDownloader.download(url.url)
+                html = self.htmlDownloader.download(url)
                 post = self.htmlParser.parser(html)
-                post.city = url.city
-                posts.add(post)
+                repRep.send_to_mq(post)
+            except Exception as e:
+                print(e)
                 
-                if count > 100:
-                    repRep.send_to_mq(posts)
-                    posts = []
-                    count = 0
-                    
-                count += 1
-            except Exception:
-                print("crawler failed")
-        
-        if (len(posts) > 0):
-            repRep.send_to_mq(posts)
         print("end!")
         
 
