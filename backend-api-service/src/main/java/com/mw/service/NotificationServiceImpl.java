@@ -31,7 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
                     notification.getCity().equalsIgnoreCase(realEstate.getCity()) &&
                     notification.getMaxRoomNr() >= realEstate.getBedroomNr() &&
                     notification.getMinRoomNr() <= realEstate.getBedroomNr() ){
-                    emailService.sendNotification(realEstate);
+                    emailService.sendNotification(realEstate, notification.getEmail());
             }
         }
     }
