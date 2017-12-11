@@ -18,12 +18,11 @@ class RealEstatePostRepo:
                              db='market_watch',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-    
         self.mq_credentials = pika.PlainCredentials('guest', 'guest')
         self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters('localhost',5672,'/', self.mq_credentials))
         #self.mq_conn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=15672))
         self.mq_channel = self.mq_conn.channel()
-        self.mq_queue_name = "binder.real-estate-posts"
+        self.mq_queue_name = "real_estate_post_queue"
         self.mq_channel.queue_declare(queue=self.mq_queue_name)        
         
     def save_to_db(self, posts):

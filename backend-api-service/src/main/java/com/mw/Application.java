@@ -12,9 +12,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class Application {
 
     public static void main(String[] args){
-
-        EmailService emailService = new EmailService();
-        emailService.sendNotification(new RealEstate(), "as.allen1128@gmail.com");
         SpringApplication.run(Application.class, args);
     }
 }

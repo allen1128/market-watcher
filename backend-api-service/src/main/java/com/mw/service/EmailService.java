@@ -16,9 +16,9 @@ public class EmailService {
     public void sendNotification(RealEstate realEstate, String recipient) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(recipient);
+        mailMessage.setFrom("as.allen1128@gmail.com");
         mailMessage.setSubject("New Real Estate Post Alert");
-        mailMessage.setText("Note that there is a new post on craiglist that fits your subscription criteria. For details check " + realEstate.getDetailedUrl());
+        mailMessage.setText("Note that there is a new post on craiglist that fits your subscription criteria. \n\n For details check " + realEstate.getDetailedUrl());
         MailUtil.send(mailMessage);
-        log.info("mail sent successfully to " + recipient);
     }
 }

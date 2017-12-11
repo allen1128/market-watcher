@@ -22,20 +22,20 @@ public class RealEstateController {
     NotificationRepository notificationRepository;
 
     @RequestMapping(value="", method = RequestMethod.GET)
-    @CrossOrigin(origins = "http://127.0.0.1:54209")
+    @CrossOrigin(origins = "http://127.0.0.1:56651")
     public List<RealEstate> getAllRealEstates(){
         return realEstateService.findAll();
     }
 
     @RequestMapping(value="/notification/add", method= RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @CrossOrigin(origins = "http://127.0.0.1:54209")
+    @CrossOrigin(origins = "http://127.0.0.1:56651")
     public void addNotification(@RequestBody Notification notification){
         notificationRepository.save(notification);
     }
 
     @RequestMapping(value="/notifications/", method=RequestMethod.GET)
-    @CrossOrigin(origins = "http://127.0.0.1:54209")
+    @CrossOrigin(origins = "http://127.0.0.1:56651")
     public List<Notification> getAllNotifications(){
         return notificationRepository.findAll();
     }

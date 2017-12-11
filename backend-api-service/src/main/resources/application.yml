@@ -14,10 +14,15 @@ spring:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL5Dialect
-  cloud:
-    stream:
-      bindings:
-        input: real-estate-posts
+#  cloud:
+#    stream:
+#      bindings:
+#        input: real-estate-posts
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 eureka:
   client:
     serviceUrl:
