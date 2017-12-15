@@ -17,22 +17,32 @@ public class NotificationServiceImpl implements NotificationService {
     EmailService emailService;
 
     @Override
-    public List<Notification> findAll() {
-        return notificationRepository.findAll();
-    }
-
-    @Override
     public void publish(RealEstate realEstate) {
-        List<Notification> notifications = findAll();
-
-        for (Notification notification : notifications){
-            if (notification.getMaxPrice() >= realEstate.getPrice() &&
-                    notification.getMinPrice() <= realEstate.getPrice() &&
-                    notification.getCity().equalsIgnoreCase(realEstate.getCity()) &&
-                    notification.getMaxRoomNr() >= realEstate.getBedroomNr() &&
-                    notification.getMinRoomNr() <= realEstate.getBedroomNr() ){
-                    emailService.sendNotification(realEstate, notification.getEmail());
+        for (Notification notification : notificationRepository.findAll()){
+            if (meetPriceReq(notification.getMaxPrice(), notification.getMinPrice(), realEstate.getPrice()) &&
+                meetRoomReq(notification.getMaxRoomNr(), notification.getMinRoomNr(), realEstate.getBedroomNr())) {
+                emailService.sendNotification(realEstate, notification.getEmail());
             }
         }
+    }
+
+    private boolean meetRoomReq(Integer maxRoom, Integer minRoom, Integer actualRoom) {
+        if (actualRoom == null){
+            return true;
+        }
+
+        boolean metMax = maxRoom == null || maxRoom >= actualRoom ? true : false;
+        boolean metMin = minRoom == null || minRoom <= actualRoom ? true : false;
+        return metMax && metMin;
+    }
+
+    private boolean meetPriceReq(Integer maxPrice, Integer minPrice, Float actualPrice) {
+        if (actualPrice == null){
+            return true;
+        }
+
+        boolean metMax = maxPrice == null || maxPrice >= actualPrice ? true : false;
+        boolean metMin = minPrice == null || minPrice <= actualPrice ? true : false;
+        return metMax && metMin;
     }
 }

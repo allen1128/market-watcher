@@ -15,7 +15,7 @@ class RealEstatePostRepo:
         self.db_conn = pymysql.connect(host='127.0.0.1',
                              user='root',
                              password='',
-                             db='market_watch',
+                             db='realestate',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
         self.mq_credentials = pika.PlainCredentials('guest', 'guest')

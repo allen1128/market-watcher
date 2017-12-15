@@ -54,7 +54,8 @@ class HtmlParser(object):
         
         for result in results:
             try:
-                print(' '.join(format(ord(x), 'b') for x in result.text))
+                #print(' '.join(format(ord(x), 'b') for x in result.text))
+                print("add to post")
                 post = {}
                 post["title"] = result.p.a.contents[0]
                 post["detail_url"] = result.p.a['href']
