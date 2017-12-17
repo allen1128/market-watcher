@@ -18,6 +18,7 @@ build/
 /gradle/
 /build/
 /out/
+*.pyc
 target/
 libraries/
 META-INF/

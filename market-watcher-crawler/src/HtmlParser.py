@@ -55,7 +55,7 @@ class HtmlParser(object):
         for result in results:
             try:
                 #print(' '.join(format(ord(x), 'b') for x in result.text))
-                print("add to post")
+                #print("add to post")
                 post = {}
                 post["title"] = result.p.a.contents[0]
                 post["detail_url"] = result.p.a['href']
@@ -71,7 +71,8 @@ class HtmlParser(object):
                 post["date_posted"] = result.p.time['datetime']
                 posts.append(post)
             except Exception as e:
-                print(e)
+                pass
+                #print(e)
         
         return posts
             
